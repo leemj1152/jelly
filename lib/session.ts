@@ -11,3 +11,15 @@ export default function getSession() {
     password: process.env.COOKIE_PASSWORD!,
   });
 }
+
+export async function savaSession(user_id: number | undefined) {
+  const session = await getSession();
+  session.id = user_id;
+  await session.save();
+}
+
+export async function errorPage() {
+  return new Response(null, {
+    status: 400,
+  });
+}

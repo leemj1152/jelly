@@ -8,7 +8,7 @@ import {
 } from "@/lib/constants";
 import db from "@/lib/db";
 import { z } from "zod";
-import getSession from "@/lib/session";
+import { savaSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 
 const checkEmailExists = async (email: string) => {
@@ -57,9 +57,7 @@ export async function logIn(prevState: any, formData: FormData) {
     });
     const ok = await bcrypt.compare(result.data.password, user!.password ?? "");
     if (ok) {
-      const session = await getSession();
-      session.id = user!.id;
-      await session.save();
+      await savaSession(user?.id);
       redirect("/profile");
     } else {
       return {

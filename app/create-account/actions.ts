@@ -7,11 +7,8 @@ import {
 } from "@/lib/constants";
 import db from "@/lib/db";
 import { z } from "zod";
-import { getIronSession } from "iron-session";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import getSession from "@/lib/session";
-import { use } from "react";
+import { savaSession } from "@/lib/session";
 
 // const passwordRegex
 
@@ -108,10 +105,7 @@ export async function createAccount(prevState: any, formData: FormData) {
         id: true,
       },
     });
-    const session = await getSession();
-
-    session.id = user.id;
-    await session.save();
+    await savaSession(user.id);
     redirect("/profile");
   }
 }
