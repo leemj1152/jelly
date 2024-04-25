@@ -17,9 +17,3 @@ export async function savaSession(user_id: number | undefined) {
   session.id = user_id;
   await session.save();
 }
-
-export async function errorPage() {
-  return new Response(null, {
-    status: 400,
-  });
-}
